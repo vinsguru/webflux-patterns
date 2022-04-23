@@ -1,0 +1,22 @@
+resilience4j.circuitbreaker:
+  instances:
+    review-service:
+      slidingWindowType: COUNT_BASED
+      slidingWindowSize: 4
+      minimumNumberOfCalls: 2
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10s
+      permittedNumberOfCallsInHalfOpenState: 2
+      recordExceptions:
+        - org.springframework.web.reactive.function.client.WebClientResponseException
+        - java.util.concurrent.TimeoutException
+resilience4j.ratelimiter:
+  instances:
+    calculator-service:
+      limitRefreshPeriod: 20s
+      limitForPeriod: 5
+      timeoutDuration: 5s
+    review-service:
+      limitRefreshPeriod: 20s
+      limitForPeriod: 3
+      timeoutDuration: 0s
